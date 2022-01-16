@@ -1,0 +1,43 @@
+<diagram program="umletino" version="14.4.0-SNAPSHOT"><zoom_level>10</zoom_level><element><id>UMLClass</id><coordinates><x>78</x><y>70</y><w>250</w><h>150</h></coordinates><panel_attributes>Site
+--
+id: int
+capacity: float
+panels: int
+address: str
+city: str
+state: str
+posta;_code: str
+coordinate: Union[Coordinate, None] = None</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLPackage</id><coordinates><x>491</x><y>90</y><w>140</w><h>70</h></coordinates><panel_attributes>EmptyPackage
+--
+bg=orange</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>79</x><y>260</y><w>230</w><h>90</h></coordinates><panel_attributes>/SiteDaoBase/
+--
+/insert(site: Site, **kwargs): None/
+/insert_many(*sites: Site, **kwargs): None/
+/find_by_id(site_id: int, **kwargs): Site/
+/find_all(**kwargs): Set[Site]/
+
+
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>77</x><y>360</y><w>450</w><h>50</h></coordinates><panel_attributes>RedisDaoBase
+--
+__init__(redis_client: Redis, key_schema: KeySchema = None, **kwargs): None
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>78</x><y>450</y><w>250</w><h>150</h></coordinates><panel_attributes>SiteDaoRedis
+--
+id: int
+capacity: float
+panels: int
+address: str
+city: str
+state: str
+posta;_code: str
+coordinate: Union[Coordinate, None] = None</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>358</x><y>450</y><w>360</w><h>220</h></coordinates><panel_attributes>KeySchema
+--
+prefix: str = DEFAULT_KEY_PREFIX
+--
+__init__(prefix:str)
+site_hash_key(site_id: int): str
+site_ids_key(): str
+site_geo_key():str
+site_stats_key(site_id:int, day: datetime):str
+capacity_ranking_key(): str
+day_metric_key(site_id: int, unit: MetricUnit, time:datetime): str
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>70</x><y>780</y><w>100</w><h>30</h></coordinates><panel_attributes>FlatSiteSchema</panel_attributes><additional_attributes></additional_attributes></element></diagram>
