@@ -96,12 +96,3 @@ yapf==0.29.0
 
 # The following packages are considered to be unsafe in a requirements file:
 # setuptools
-
-redis~=3.5.0
-setuptools~=60.5.0
-webargs~=6.0.0
-Flask~=1.1.1
-marshmallow~=3.10.0
-redistimeseries~=0.8.0
-click~=7.1.1
-progress~=1.5
