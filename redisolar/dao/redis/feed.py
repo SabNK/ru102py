@@ -1,3 +1,4 @@
+from dataclasses import asdict
 from typing import List
 
 import redis
@@ -27,6 +28,11 @@ class FeedDaoRedis(FeedDaoBase, RedisDaoBase):
     def _insert(self, meter_reading: MeterReading,
                 pipeline: redis.client.Pipeline) -> None:
         """Helper method to insert a meter reading."""
+        pipeline.xadd(self.key_schema.global_feed_key(), MeterReadingSchema().dump(meter_reading),
+                      maxlen=self.GLOBAL_MAX_FEED_LENGTH,)
+        pipeline.xadd(self.key_schema.feed_key(meter_reading.site_id), MeterReadingSchema().dump(meter_reading),
+                      maxlen=self.GLOBAL_MAX_FEED_LENGTH,)
+
         # START Challenge #6
         # END Challenge #6
 

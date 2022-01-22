@@ -36,5 +36,12 @@ class CapacityReportDaoRedis(CapacityDaoBase, RedisDaoBase):
         # START Challenge #4
         # Remove the following line after you have added code to
         # get the real rank.
-        return 0
+        capacity_ranking_key = self.key_schema.capacity_ranking_key()
+        return self.redis.zrevrank(capacity_ranking_key, site_id)
+        '''
+        p = self.redis.pipeline()
+        p.zrevrange(capacity_ranking_key, 0, - 1)
+        [sorted_capacity_ids] = p.execute()
+        return [int(v) for v in sorted_capacity_ids].index(site_id)
         # END Challenge #4
+        '''
