@@ -5,6 +5,6 @@ RUN apt-get update
 COPY . /src 
 WORKDIR /src
 
-RUN make env
+RUN make venv
 
 ENV IS_CI=true

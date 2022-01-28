@@ -1,0 +1,21 @@
+REDIS CLI
+    Run a redis container in detached mode:
+        docker run -d redis
+
+    Run redis-cli on it:
+        docker exec -it e0c061a5700bfa400f8f24b redis-cli
+        where e0c061a5700bfa400f8f24b is the id of the container.
+
+Client Naming
+    redis.cloud:6379> CLIENT SETNAME RU102PY
+    redis.cloud:6379> CLIENT GETNAME
+    "RU102PY"
+    redis.cloud:6379> CLIENT LIST
+
+naming convention
+    app25.example.com-redisolar-41992
+client = redis.Redis(client_name="RU102PY")
+
+connections your app could use is something like P * T * N, where P is the number of processes,
+T is the number of threads each process uses,
+and N is the number of nodes on which your app runs (if it’s running on a cluster).

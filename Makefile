@@ -14,30 +14,30 @@ endif
 
 .PHONY: mypy test all clean dev load frontend timeseries-docker deps
 
-all: env mypy lint test
+all: venv mypy lint test
 
-env: env/bin/activate
+venv: venv/bin/activate
 
-env/bin/activate: requirements.txt
-	test -d env || python3.8 -m venv env
-	. env/bin/activate; pip install --upgrade pip; pip install pip-tools wheel -e .; pip-sync requirements.txt requirements-dev.txt
-	touch env/bin/activate
+venv/bin/activate: requirements.txt
+	test -d env || python3.8 -m venv venv
+	. venv/bin/activate; pip install --upgrade pip; pip install pip-tools wheel -e .; pip-sync requirements.txt requirements-dev.txt
+	touch venv/bin/activate
 
-mypy: env
-	. env/bin/activate; mypy --ignore-missing-imports redisolar
+mypy: venv
+	. venv/bin/activate; mypy --ignore-missing-imports redisolar
 
-test: env
-	. env/bin/activate; pytest $(FLAGS)
+test: venv
+	. venv/bin/activate; pytest $(FLAGS)
 
-lint: env
-	. env/bin/activate; pylint redisolar
+lint: venv
+	. venv/bin/activate; pylint redisolar
 
 clean:
-	rm -rf env
+	rm -rf venv
 	find . -type f -name '*.py[co]' -delete -o -type d -name __pycache__ -delete
 
-dev: env
-	. env/bin/activate; FLASK_ENV=development FLASK_APP=$(APP) FLASK_DEBUG=1 flask run --port=$(PORT) --host=0.0.0.0
+dev: venv
+	. venv/bin/activate; FLASK_ENV=development FLASK_APP=$(APP) FLASK_DEBUG=1 flask run --port=$(PORT) --host=0.0.0.0
 
 requirements.txt: requirements.in
 	pip-compile requirements.in > requirements.txt
@@ -47,14 +47,14 @@ requirements-dev.txt: requirements-dev.in
 
 deps: requirements-dev.txt requirements.txt
 
-frontend: env
+frontend: venv
 	cd frontend; npm run build
 	rm -rf redisolar/static
 	cp -r frontend/dist/static redisolar/static
 	cp frontend/dist/index.html redisolar/static/
 
-load: env
-	. env/bin/activate; FLASK_APP=$(APP) flask load
+load: venv
+	. venv/bin/activate; FLASK_APP=$(APP) flask load
 
 timeseries-docker:
 	docker run -p 6379:6379 -it -d --rm redislabs/redistimeseries
