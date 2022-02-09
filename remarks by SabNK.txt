@@ -19,3 +19,8 @@ client = redis.Redis(client_name="RU102PY")
 connections your app could use is something like P * T * N, where P is the number of processes,
 T is the number of threads each process uses,
 and N is the number of nodes on which your app runs (if it’s running on a cluster).
+
+Monitor
+    redis-cli monitor > commands.txt &
+    fg
+    (foreground and then CTRL+C)
